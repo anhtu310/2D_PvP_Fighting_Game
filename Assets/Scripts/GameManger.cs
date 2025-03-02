@@ -27,6 +27,8 @@ public class GameManger : MonoBehaviour
 
         GameObject player1 = Instantiate(characterPrefabs[p1Index], spawnPoint1.position, Quaternion.identity);
         GameObject player2 = Instantiate(characterPrefabs[p2Index], spawnPoint2.position, Quaternion.identity);
+        player1.AddComponent<MoveP1>();
+        player2.AddComponent<MoveP2>();
 
         SpriteRenderer spriteRenderer = map.GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = maps[mapIndex];
@@ -36,6 +38,11 @@ public class GameManger : MonoBehaviour
         scale.x = -Mathf.Abs(scale.x); // Đảm bảo luôn là số âm
         player2.transform.localScale = scale;
 
-
+        // Tìm CameraManager và gán 2 nhân vật
+        CameraManage cameraManager = FindFirstObjectByType<CameraManage>();
+        if (cameraManager != null)
+        {
+            cameraManager.SetPlayers(player1.transform, player2.transform);
+        }
     }
 }
