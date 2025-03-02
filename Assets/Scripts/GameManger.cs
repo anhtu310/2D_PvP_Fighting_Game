@@ -27,18 +27,25 @@ public class GameManger : MonoBehaviour
 
         GameObject player1 = Instantiate(characterPrefabs[p1Index], spawnPoint1.position, Quaternion.identity);
         GameObject player2 = Instantiate(characterPrefabs[p2Index], spawnPoint2.position, Quaternion.identity);
-        player1.AddComponent<MoveP1>();
-        player2.AddComponent<MoveP2>();
 
+        // Cập nhật hình nền map
         SpriteRenderer spriteRenderer = map.GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = maps[mapIndex];
 
-        // Lật nhân vật 2 để quay vào nhân vật 1
+        // Lật nhân vật 2 để đối diện nhân vật 1
         Vector3 scale = player2.transform.localScale;
-        scale.x = -Mathf.Abs(scale.x); // Đảm bảo luôn là số âm
+        scale.x = -Mathf.Abs(scale.x);
         player2.transform.localScale = scale;
 
-        // Tìm CameraManager và gán 2 nhân vật
+        // Thêm PlayerController vào từng nhân vật
+        PlayerController p1Controller = player1.AddComponent<PlayerController>();
+        PlayerController p2Controller = player2.AddComponent<PlayerController>();
+
+        // Đánh dấu Player 1 và Player 2
+        p1Controller.isPlayer1 = true;
+        p2Controller.isPlayer1 = false;
+
+        // Gán 2 nhân vật vào CameraManager để camera theo dõi
         CameraManage cameraManager = FindFirstObjectByType<CameraManage>();
         if (cameraManager != null)
         {
@@ -46,3 +53,4 @@ public class GameManger : MonoBehaviour
         }
     }
 }
+
