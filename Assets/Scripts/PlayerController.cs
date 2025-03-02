@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
 
     public float walkSpeed = 2f;
     public float runSpeed = 5f;
-    public float jumpForce = 5f;
+    public float jumpForce = 7f;
     public float doubleTapTime = 0.3f;
     public float dashSpeed = 20f;
     public float dashTime = 0.1f;
@@ -46,8 +46,8 @@ public class PlayerController : MonoBehaviour
             rightKey = KeyCode.D;
             jumpKey = KeyCode.W;
             attackKey = KeyCode.J;
-            skill1Key = KeyCode.U;
-            skill2Key = KeyCode.I;
+            skill1Key = KeyCode.K;
+            skill2Key = KeyCode.L;
             dashKey = KeyCode.S;
         }
         else
@@ -56,8 +56,8 @@ public class PlayerController : MonoBehaviour
             rightKey = KeyCode.RightArrow;
             jumpKey = KeyCode.UpArrow;
             attackKey = KeyCode.Alpha1;
-            skill1Key = KeyCode.Alpha4;
-            skill2Key = KeyCode.Alpha5;
+            skill1Key = KeyCode.Alpha2;
+            skill2Key = KeyCode.Alpha3;
             dashKey = KeyCode.DownArrow;
         }
     }
