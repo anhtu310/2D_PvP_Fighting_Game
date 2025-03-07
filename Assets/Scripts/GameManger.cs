@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManger : MonoBehaviour
 {
@@ -52,5 +53,7 @@ public class GameManger : MonoBehaviour
             cameraManager.SetPlayers(player1.transform, player2.transform);
         }
     }
+
+    
 }
 
