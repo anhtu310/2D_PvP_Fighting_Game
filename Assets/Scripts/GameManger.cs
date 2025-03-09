@@ -3,21 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManger : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     [SerializeField] private List<GameObject> characterPrefabs; // Danh sách Prefab nhân vật
     [SerializeField] private Transform spawnPoint1, spawnPoint2; // Vị trí để spawn nhân vật
     [SerializeField] private List<Sprite> maps = new List<Sprite>();
     [SerializeField] private GameObject map;
+
     void Start()
     {
         SpawnCharacter();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     void SpawnCharacter()
@@ -38,13 +33,16 @@ public class GameManger : MonoBehaviour
         scale.x = -Mathf.Abs(scale.x);
         player2.transform.localScale = scale;
 
-        // Thêm PlayerController vào từng nhân vật
-        PlayerController p1Controller = player1.AddComponent<PlayerController>();
-        PlayerController p2Controller = player2.AddComponent<PlayerController>();
+        // Thêm PlayerMovement và PlayerAttack vào từng nhân vật
+        PlayerMovement p1Movement = player1.AddComponent<PlayerMovement>();
+        PlayerAttack p1Attack = player1.AddComponent<PlayerAttack>();
+
+        PlayerMovement p2Movement = player2.AddComponent<PlayerMovement>();
+        PlayerAttack p2Attack = player2.AddComponent<PlayerAttack>();
 
         // Đánh dấu Player 1 và Player 2
-        p1Controller.isPlayer1 = true;
-        p2Controller.isPlayer1 = false;
+        p1Movement.isPlayer1 = true;
+        p2Movement.isPlayer1 = false;
 
         // Gán 2 nhân vật vào CameraManager để camera theo dõi
         CameraManage cameraManager = FindFirstObjectByType<CameraManage>();
@@ -56,4 +54,3 @@ public class GameManger : MonoBehaviour
 
     
 }
-

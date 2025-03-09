@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerController : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
-    public bool isPlayer1 = false; // Mặc định là Player 2
-
+    public bool isPlayer1 = false;
     public float walkSpeed = 2f;
     public float runSpeed = 5f;
     public float jumpForce = 7f;
@@ -16,9 +15,6 @@ public class PlayerController : MonoBehaviour
     public KeyCode leftKey;
     public KeyCode rightKey;
     public KeyCode jumpKey;
-    public KeyCode attackKey;
-    public KeyCode skill1Key;
-    public KeyCode skill2Key;
     public KeyCode dashKey;
 
     private Rigidbody2D rb;
@@ -30,24 +26,17 @@ public class PlayerController : MonoBehaviour
 
     private float lastLeftPressTime = -1f;
     private float lastRightPressTime = -1f;
-    private float attackComboStep = 0;
-    private float lastAttackTime = 0f;
-    private float comboResetTime = 1f;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
 
-        // Gán phím điều khiển
         if (isPlayer1)
         {
             leftKey = KeyCode.A;
             rightKey = KeyCode.D;
             jumpKey = KeyCode.W;
-            attackKey = KeyCode.J;
-            skill1Key = KeyCode.K;
-            skill2Key = KeyCode.L;
             dashKey = KeyCode.S;
         }
         else
@@ -55,9 +44,6 @@ public class PlayerController : MonoBehaviour
             leftKey = KeyCode.LeftArrow;
             rightKey = KeyCode.RightArrow;
             jumpKey = KeyCode.UpArrow;
-            attackKey = KeyCode.Alpha1;
-            skill1Key = KeyCode.Alpha2;
-            skill2Key = KeyCode.Alpha3;
             dashKey = KeyCode.DownArrow;
         }
     }
@@ -66,9 +52,6 @@ public class PlayerController : MonoBehaviour
     {
         HandleMovement();
         HandleJump();
-        HandleAttack();
-        HandleSkills();
-        CheckComboReset();
         HandleDash();
     }
 
@@ -103,6 +86,7 @@ public class PlayerController : MonoBehaviour
 
         animator.SetFloat("Speed", Mathf.Abs(rb.linearVelocity.x));
     }
+
     void HandleJump()
     {
         if (Input.GetKeyDown(jumpKey) && isGrounded)
@@ -111,34 +95,6 @@ public class PlayerController : MonoBehaviour
             animator.SetTrigger("Jump");
             isGrounded = false;
         }
-    }
-
-    void HandleAttack()
-    {
-        if (Input.GetKeyDown(attackKey))
-        {
-            lastAttackTime = Time.time;
-            attackComboStep++;
-            if (attackComboStep > 2) attackComboStep = 0;
-
-            animator.SetFloat("AttackType", attackComboStep);
-            animator.SetTrigger("Attack");
-        }
-    }
-
-    void CheckComboReset()
-    {
-        if (Time.time - lastAttackTime > comboResetTime)
-        {
-            attackComboStep = 0;
-            animator.SetFloat("AttackType", 0);
-        }
-    }
-
-    void HandleSkills()
-    {
-        if (Input.GetKeyDown(skill1Key)) animator.SetTrigger("Skill1");
-        else if (Input.GetKeyDown(skill2Key)) animator.SetTrigger("Skill2");
     }
 
     void HandleDash()
