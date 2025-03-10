@@ -16,6 +16,11 @@ public class PlayerMovement : MonoBehaviour
     public KeyCode rightKey;
     public KeyCode jumpKey;
     public KeyCode dashKey;
+    public KeyCode attackKey;
+
+    private float attackComboStep = 0;
+    private float lastAttackTime = 0f;
+    private float comboResetTime = 1f;
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -38,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
             rightKey = KeyCode.D;
             jumpKey = KeyCode.W;
             dashKey = KeyCode.S;
+            attackKey = KeyCode.J;
         }
         else
         {
@@ -45,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
             rightKey = KeyCode.RightArrow;
             jumpKey = KeyCode.UpArrow;
             dashKey = KeyCode.DownArrow;
+            attackKey = KeyCode.Keypad1;
         }
     }
 
@@ -53,6 +60,9 @@ public class PlayerMovement : MonoBehaviour
         HandleMovement();
         HandleJump();
         HandleDash();
+        HandleAttack();
+        CheckComboReset();
+
     }
 
     void HandleMovement()
@@ -117,6 +127,28 @@ public class PlayerMovement : MonoBehaviour
         isDashing = false;
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
+    }
+
+    void HandleAttack()
+    {
+        if (Input.GetKeyDown(attackKey))
+        {
+            lastAttackTime = Time.time;
+            attackComboStep++;
+            if (attackComboStep > 2) attackComboStep = 1;
+
+            animator.SetFloat("AttackType", attackComboStep);
+            animator.SetTrigger("Attack");
+        }
+    }
+
+    void CheckComboReset()
+    {
+        if (Time.time - lastAttackTime > comboResetTime)
+        {
+            attackComboStep = 0;
+            animator.SetFloat("AttackType", 0);
+        }
     }
 
     void OnCollisionEnter2D(Collision2D other)
