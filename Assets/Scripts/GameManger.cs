@@ -24,6 +24,9 @@ public class GameManager : MonoBehaviour
 
         AssignPlayerMovements(player1, player2);
         AssignCameraTargets(player1.transform, player2.transform);
+
+        player1.AddComponent<HealthSystem>();
+        player2.AddComponent<HealthSystem>();
     }
 
     GameObject InstantiateCharacter(GameObject prefab, Transform spawnPoint, string tag)
