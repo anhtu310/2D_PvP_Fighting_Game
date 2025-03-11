@@ -119,6 +119,67 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &68634391
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 603050423112662893, guid: 418ad37ced8ca744dba2d7332f97a8f2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 7.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 603050423112662893, guid: 418ad37ced8ca744dba2d7332f97a8f2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 603050423112662893, guid: 418ad37ced8ca744dba2d7332f97a8f2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 603050423112662893, guid: 418ad37ced8ca744dba2d7332f97a8f2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 603050423112662893, guid: 418ad37ced8ca744dba2d7332f97a8f2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 603050423112662893, guid: 418ad37ced8ca744dba2d7332f97a8f2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 603050423112662893, guid: 418ad37ced8ca744dba2d7332f97a8f2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 603050423112662893, guid: 418ad37ced8ca744dba2d7332f97a8f2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 603050423112662893, guid: 418ad37ced8ca744dba2d7332f97a8f2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 603050423112662893, guid: 418ad37ced8ca744dba2d7332f97a8f2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 950579323135347238, guid: 418ad37ced8ca744dba2d7332f97a8f2, type: 3}
+      propertyPath: skill1Key
+      value: 258
+      objectReference: {fileID: 0}
+    - target: {fileID: 1009709528305796025, guid: 418ad37ced8ca744dba2d7332f97a8f2, type: 3}
+      propertyPath: m_Name
+      value: Wanderer_Magican
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 418ad37ced8ca744dba2d7332f97a8f2, type: 3}
 --- !u!1 &299538226
 GameObject:
   m_ObjectHideFlags: 0
@@ -209,116 +270,6 @@ MonoBehaviour:
   - {fileID: -5119980863986964875, guid: 0d6c14a108398814e93cc0f2b8310660, type: 3}
   - {fileID: -2654578747269680716, guid: dcb88feac03a3dd45bfb3c9e8ea738ef, type: 3}
   map: {fileID: 1090901416}
---- !u!1 &701592452 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1009709528305796025, guid: 418ad37ced8ca744dba2d7332f97a8f2, type: 3}
-  m_PrefabInstance: {fileID: 780349524}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &701592459
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 701592452}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9c93d8ea1da5e04b9ca806347a400cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isPlayer1: 0
-  walkSpeed: 2
-  runSpeed: 5
-  jumpForce: 7
-  doubleTapTime: 0.3
-  dashSpeed: 20
-  dashTime: 0.1
-  dashCooldown: 0.5
-  leftKey: 276
-  rightKey: 275
-  jumpKey: 273
-  dashKey: 274
-  attackKey: 257
---- !u!1001 &780349524
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 603050423112662893, guid: 418ad37ced8ca744dba2d7332f97a8f2, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -7.2221246
-      objectReference: {fileID: 0}
-    - target: {fileID: 603050423112662893, guid: 418ad37ced8ca744dba2d7332f97a8f2, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -3.1372323
-      objectReference: {fileID: 0}
-    - target: {fileID: 603050423112662893, guid: 418ad37ced8ca744dba2d7332f97a8f2, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 603050423112662893, guid: 418ad37ced8ca744dba2d7332f97a8f2, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 603050423112662893, guid: 418ad37ced8ca744dba2d7332f97a8f2, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 603050423112662893, guid: 418ad37ced8ca744dba2d7332f97a8f2, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 603050423112662893, guid: 418ad37ced8ca744dba2d7332f97a8f2, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 603050423112662893, guid: 418ad37ced8ca744dba2d7332f97a8f2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 603050423112662893, guid: 418ad37ced8ca744dba2d7332f97a8f2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 603050423112662893, guid: 418ad37ced8ca744dba2d7332f97a8f2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 950579323135347238, guid: 418ad37ced8ca744dba2d7332f97a8f2, type: 3}
-      propertyPath: attackKey
-      value: 257
-      objectReference: {fileID: 0}
-    - target: {fileID: 950579323135347238, guid: 418ad37ced8ca744dba2d7332f97a8f2, type: 3}
-      propertyPath: skill1Key
-      value: 258
-      objectReference: {fileID: 0}
-    - target: {fileID: 950579323135347238, guid: 418ad37ced8ca744dba2d7332f97a8f2, type: 3}
-      propertyPath: skill2Key
-      value: 259
-      objectReference: {fileID: 0}
-    - target: {fileID: 1009709528305796025, guid: 418ad37ced8ca744dba2d7332f97a8f2, type: 3}
-      propertyPath: m_Name
-      value: Wanderer_Magican
-      objectReference: {fileID: 0}
-    - target: {fileID: 2761216353265359661, guid: 418ad37ced8ca744dba2d7332f97a8f2, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.33
-      objectReference: {fileID: 0}
-    - target: {fileID: 2761216353265359661, guid: 418ad37ced8ca744dba2d7332f97a8f2, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.02
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1009709528305796025, guid: 418ad37ced8ca744dba2d7332f97a8f2, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 701592459}
-  m_SourcePrefab: {fileID: 100100000, guid: 418ad37ced8ca744dba2d7332f97a8f2, type: 3}
 --- !u!1 &958535115
 GameObject:
   m_ObjectHideFlags: 0
@@ -1008,4 +959,4 @@ SceneRoots:
   - {fileID: 299538227}
   - {fileID: 1874600954}
   - {fileID: 1076514257}
-  - {fileID: 780349524}
+  - {fileID: 68634391}

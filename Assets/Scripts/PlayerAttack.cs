@@ -22,8 +22,8 @@ public class PlayerAttack : MonoBehaviour
         }
         else
         {
-            skill1Key = KeyCode.Alpha2;
-            skill2Key = KeyCode.Alpha3;
+            skill1Key = KeyCode.Keypad2;
+            skill2Key = KeyCode.Keypad3;
         }
     }
 
