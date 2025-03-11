@@ -5,20 +5,18 @@ public class Projectile : MonoBehaviour
     [SerializeField] private float speed;
     private bool hit;
     private float direction;
-    private BoxCollider2D boxCollider;
+    private float damage; // Biến lưu sát thương của viên đạn
     private Animator animator;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        boxCollider = GetComponent<BoxCollider2D>();
     }
 
     private void Update()
     {
         if (hit) return;
-        float movementSpeed = speed * Time.deltaTime * direction;
-        transform.Translate(movementSpeed, 0, 0);
+        transform.Translate(speed * Time.deltaTime * direction, 0, 0);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -32,23 +30,24 @@ public class Projectile : MonoBehaviour
             HealthSystem health = collision.GetComponent<HealthSystem>();
             if (health != null)
             {
-                health.TakeDamage((int)10f); // Gây 10 sát thương
+                health.TakeDamage(damage); // Gây sát thương
             }
 
             Invoke("Deactivate", 0.3f);
         }
     }
 
-
     public void SetDirection(float _direction)
     {
         direction = _direction;
         hit = false;
-
-        float localScaleX = Mathf.Abs(transform.localScale.x) * Mathf.Sign(direction);
-        transform.localScale = new Vector3(localScaleX, transform.localScale.y, transform.localScale.z);
-
+        transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * Mathf.Sign(direction), transform.localScale.y, transform.localScale.z);
         Invoke("Deactivate", 1f);
+    }
+
+    public void SetDamage(float _damage)
+    {
+        damage = _damage;
     }
 
     private void Deactivate()

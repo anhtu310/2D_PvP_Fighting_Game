@@ -57,21 +57,21 @@ public class C6 : MonoBehaviour
         skillQueued = true;
     }
 
-    public void SpawnSkill1() => HandleSkill(C6_1Prefab, firePoint1, ref isSkill1Queued, true);
-    public void SpawnSkill2() => HandleSkill(C6_2Prefab, firePoint2, ref isSkill2Queued, false);
+    public void SpawnSkill1() => HandleSkill(C6_1Prefab, firePoint1, ref isSkill1Queued, true,15f);
+    public void SpawnSkill2() => HandleSkill(C6_2Prefab, firePoint2, ref isSkill2Queued, false,35f);
 
-    void HandleSkill(GameObject prefab, Transform firePoint, ref bool skillQueued, bool chargeAndFire)
+    void HandleSkill(GameObject prefab, Transform firePoint, ref bool skillQueued, bool chargeAndFire, float dame)
     {
         if (!skillQueued) return;
         skillQueued = false;
 
         if (chargeAndFire)
-            StartCoroutine(ChargeAndFireSkill(prefab, firePoint));
+            StartCoroutine(ChargeAndFireSkill(prefab, firePoint, dame));
         else
-            SpawnProjectile(prefab, firePoint, true);
+            SpawnProjectile(prefab, firePoint, true, dame);
     }
 
-    IEnumerator ChargeAndFireSkill(GameObject prefab, Transform firePoint)
+    IEnumerator ChargeAndFireSkill(GameObject prefab, Transform firePoint, float dame)
     {
         GameObject projectile = Instantiate(prefab, firePoint.position, Quaternion.identity);
         projectile.SetActive(true);
@@ -90,9 +90,10 @@ public class C6 : MonoBehaviour
 
         float direction = transform.localScale.x > 0 ? 1 : -1;
         projectile.GetComponent<Projectile>().SetDirection(direction);
+        projectile.GetComponent<Projectile>().SetDamage(dame);
     }
 
-    void SpawnProjectile(GameObject prefab, Transform firePoint, bool shouldMove)
+    void SpawnProjectile(GameObject prefab, Transform firePoint, bool shouldMove, float dame)
     {
         GameObject projectile = Instantiate(prefab, firePoint.position, Quaternion.identity);
         projectile.SetActive(true);
@@ -103,5 +104,6 @@ public class C6 : MonoBehaviour
             float direction = transform.localScale.x > 0 ? 1 : -1;
             projectile.GetComponent<Projectile>().SetDirection(direction);
         }
+        projectile.GetComponent<Projectile>().SetDamage(dame);
     }
 }

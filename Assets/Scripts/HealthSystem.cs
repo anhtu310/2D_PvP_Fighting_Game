@@ -3,14 +3,14 @@ using UnityEngine;
 
 public class HealthSystem : MonoBehaviour
 {
-    [SerializeField] private float maxHealth = 100f;
+    [SerializeField] private float maxHealth = 300f;
     private float currentHealth;
     private HealthBar healthBar;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
 
-    [SerializeField] private Color damageColor = Color.red; // Màu khi bị tấn công
-    [SerializeField] private float flashDuration = 0.2f;   // Thời gian hiệu ứng nhấp nháy
+    [SerializeField] private Color damageColor = Color.red;
+    [SerializeField] private float flashDuration = 0.2f;
 
     void Start()
     {
@@ -19,7 +19,12 @@ public class HealthSystem : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         StartCoroutine(WaitAndFindHealthBar());
+
+        // Cập nhật thanh máu ngay từ đầu
+        if (healthBar != null)
+            healthBar.SetHealth(currentHealth);
     }
+
 
     IEnumerator WaitAndFindHealthBar()
     {
@@ -41,6 +46,7 @@ public class HealthSystem : MonoBehaviour
         if (barObject != null)
         {
             healthBar = barObject.GetComponent<HealthBar>();
+            healthBar.SetHealth(currentHealth); // Cập nhật ngay khi tìm thấy
         }
         else
         {
@@ -48,16 +54,15 @@ public class HealthSystem : MonoBehaviour
         }
     }
 
+
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
-
         if (healthBar != null)
             healthBar.SetHealth(currentHealth);
 
         animator.SetTrigger("Hurt");
-
-        StartCoroutine(FlashDamageEffect()); // Gọi hiệu ứng nhấp nháy
+        StartCoroutine(FlashDamageEffect());
 
         if (currentHealth <= 0)
             Die();
