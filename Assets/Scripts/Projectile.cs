@@ -1,61 +1,57 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
     [SerializeField] private float speed;
     private bool hit;
     private float direction;
-    private float lifeTime;
-
-    private BoxCollider2D collider;
+    private BoxCollider2D boxCollider;
     private Animator animator;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        collider = GetComponent<BoxCollider2D>();
+        boxCollider = GetComponent<BoxCollider2D>();
     }
 
     private void Update()
     {
-        if (hit)
-        {
-            return;
-        }
-
-        float movementSpeed = speed * Time.deltaTime*direction;
+        if (hit) return;
+        float movementSpeed = speed * Time.deltaTime * direction;
         transform.Translate(movementSpeed, 0, 0);
-
-        lifeTime += Time.deltaTime;
-        if(lifeTime > 5) gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        hit = true;
-        collider.enabled = false;
-        animator.SetTrigger("Explode");
+        if (!hit && (gameObject.tag == "Projectile_P1" && collision.CompareTag("Player2")) ||
+                    (gameObject.tag == "Projectile_P2" && collision.CompareTag("Player1")))
+        {
+            hit = true;
+            animator.SetTrigger("Explode");
+
+            Animator playerAnimator = collision.GetComponent<Animator>();
+            if (playerAnimator != null)
+            {
+                playerAnimator.SetTrigger("Hurt");
+            }
+
+            Invoke("Deactivate", 0.3f);
+        }
     }
 
     public void SetDirection(float _direction)
     {
-        lifeTime = 0;
         direction = _direction;
-        gameObject.SetActive(true);
         hit = false;
-        collider.enabled = true;
 
-        float localScaleX = transform.localScale.x;
-        if(Mathf.Sign(localScaleX) != _direction)
-        {
-            localScaleX = -localScaleX;
-        }
-
+        float localScaleX = Mathf.Abs(transform.localScale.x) * Mathf.Sign(direction);
         transform.localScale = new Vector3(localScaleX, transform.localScale.y, transform.localScale.z);
+
+        Invoke("Deactivate", 2f);
     }
 
     private void Deactivate()
     {
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 }

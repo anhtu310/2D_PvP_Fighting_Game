@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 3
   tags:
   - Ground
+  - Player1
+  - Player2
+  - Projectile_P1
+  - Projectile_P2
   layers:
   - Default
   - TransparentFX
