@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
         FlipPlayer(player2);
         UpdateMap(mapIndex);
 
-        AssignPlayerMovements(player1, player2);
+        //AssignPlayerMovements(player1, player2);
         AssignCameraTargets(player1.transform, player2.transform);
 
         player1.AddComponent<HealthSystem>();
@@ -49,14 +49,14 @@ public class GameManager : MonoBehaviour
         if (renderer != null) renderer.sprite = maps[mapIndex];
     }
 
-    void AssignPlayerMovements(GameObject player1, GameObject player2)
-    {
-        PlayerMovement p1Movement = player1.AddComponent<PlayerMovement>();
-        PlayerMovement p2Movement = player2.AddComponent<PlayerMovement>();
+    //void AssignPlayerMovements(GameObject player1, GameObject player2)
+    //{
+    //    PlayerMovement p1Movement = player1.AddComponent<PlayerMovement>();
+    //    PlayerMovement p2Movement = player2.AddComponent<PlayerMovement>();
 
-        p1Movement.isPlayer1 = true;
-        p2Movement.isPlayer1 = false;
-    }
+    //    p1Movement.isPlayer1 = true;
+    //    p2Movement.isPlayer1 = false;
+    //}
 
     void AssignCameraTargets(Transform player1, Transform player2)
     {
