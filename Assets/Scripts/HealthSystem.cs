@@ -79,4 +79,16 @@ public class HealthSystem : MonoBehaviour
         yield return new WaitForSeconds(flashDuration);
         spriteRenderer.color = Color.white;
     }
+
+
+    public void Heal(float amount)
+    {
+        currentHealth += amount;
+        if (currentHealth > maxHealth)
+            currentHealth = maxHealth;
+
+        if (healthBar != null)
+            healthBar.SetHealth(currentHealth);
+    }
+
 }

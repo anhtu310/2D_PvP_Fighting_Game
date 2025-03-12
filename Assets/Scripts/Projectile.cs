@@ -5,12 +5,15 @@ public class Projectile : MonoBehaviour
     [SerializeField] private float speed;
     private bool hit;
     private float direction;
-    private float damage; // Biến lưu sát thương của viên đạn
+    private float damage;
     private Animator animator;
+    private bool canExplode = true; // Mặc định có hiệu ứng nổ
+    private Collider2D col;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        col = GetComponent<Collider2D>();
     }
 
     private void Update()
@@ -25,15 +28,28 @@ public class Projectile : MonoBehaviour
                      (gameObject.tag == "Projectile_P2" && collision.CompareTag("Player1"))))
         {
             hit = true;
-            animator.SetTrigger("Explode");
 
             HealthSystem health = collision.GetComponent<HealthSystem>();
             if (health != null)
             {
-                health.TakeDamage(damage); // Gây sát thương
+                health.TakeDamage(damage);
             }
 
-            Invoke("Deactivate", 0.3f);
+            // Vô hiệu hóa collider để tránh va chạm nhiều lần
+            if (col != null) col.enabled = false;
+
+            if (canExplode && animator != null) // Kiểm tra có animation "Explode" không
+            {
+                animator.SetTrigger("Explode");
+
+                // Hủy bất kỳ Invoke nào trước đó và hủy object sau 0.2s
+                CancelInvoke("Deactivate");
+                Invoke("Deactivate", 0.3f);
+            }
+            else
+            {
+                Deactivate(); // Nếu không có "Explode", hủy ngay
+            }
         }
     }
 
@@ -42,12 +58,20 @@ public class Projectile : MonoBehaviour
         direction = _direction;
         hit = false;
         transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * Mathf.Sign(direction), transform.localScale.y, transform.localScale.z);
+
+        // Hủy viên đạn sau 1 giây nếu không chạm vào gì
+        CancelInvoke("Deactivate");
         Invoke("Deactivate", 1f);
     }
 
     public void SetDamage(float _damage)
     {
         damage = _damage;
+    }
+
+    public void SetCanExplode(bool value)
+    {
+        canExplode = value;
     }
 
     private void Deactivate()
