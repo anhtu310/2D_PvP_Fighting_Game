@@ -10,11 +10,12 @@ public class C2 : CharacterBase
 
     protected override void Update()
     {
-        base.Update(); // Gọi các hành động di chuyển, dash, combo từ CharacterBase
+        base.Update();
 
-        if (Input.GetKeyDown(skill1Key)) QueueSkill("Skill1");
-        if (Input.GetKeyDown(skill2Key)) QueueSkill("Skill2");
+        if (Input.GetKeyDown(skill1Key)) TryUseSkill(1, "Skill1");
+        if (Input.GetKeyDown(skill2Key)) TryUseSkill(2, "Skill2");
     }
+
 
     public void SpawnSkill1() => StartCoroutine(FireProjectileWithChargeOption(C2Prefab, firePoint, damageSkill, false, false));
 

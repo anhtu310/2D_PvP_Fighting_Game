@@ -11,6 +11,16 @@ public class CharacterBase : MonoBehaviour
     public float dashTime = 0.1f;
     public float dashCooldown = 0.5f;
 
+    public GameObject attackZone;
+    public float attackDuration = 0.5f;
+    public float attackDamage = 10f;
+    public float manaCostSkill1;
+    public float manaCostSkill2;
+
+    public float maxHealth = 300f;
+    public float maxMana = 150f;
+    public float manaRegenRate = 2f;
+
     protected KeyCode leftKey;
     protected KeyCode rightKey;
     protected KeyCode jumpKey;
@@ -26,6 +36,8 @@ public class CharacterBase : MonoBehaviour
     protected Rigidbody2D rb;
     protected Animator animator;
     public HealthSystem healthSystem;
+    public ManaSystem manaSystem;
+
 
     private bool isGrounded;
     private bool isRunning = false;
@@ -40,6 +52,7 @@ public class CharacterBase : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         healthSystem = GetComponent<HealthSystem>();
+        manaSystem = GetComponent<ManaSystem>();
         InitializeKeys();
     }
 
@@ -150,7 +163,19 @@ public class CharacterBase : MonoBehaviour
 
             animator.SetFloat("AttackType", attackComboStep);
             animator.SetTrigger("Attack");
+
+            StartCoroutine(ActivateAttackZone());
         }
+    }
+
+    private IEnumerator ActivateAttackZone()
+    {
+        attackZone.SetActive(true);
+
+        DealDamageToEnemies();
+
+        yield return new WaitForSeconds(attackDuration);
+        attackZone.SetActive(false);
     }
 
     private void CheckComboReset()
@@ -159,6 +184,28 @@ public class CharacterBase : MonoBehaviour
         {
             attackComboStep = 0;
             animator.SetFloat("AttackType", 0);
+        }
+    }
+
+    private void DealDamageToEnemies()
+    {
+        Collider2D[] enemiesHit = Physics2D.OverlapBoxAll(attackZone.transform.position,
+                                                          attackZone.GetComponent<BoxCollider2D>().size,
+                                                          0f);
+        foreach (Collider2D enemy in enemiesHit)
+        {
+            if ((CompareTag("Player1") && enemy.CompareTag("Player2")) ||
+                (CompareTag("Player2") && enemy.CompareTag("Player1")))
+            {
+                HealthSystem enemyHealth = enemy.GetComponent<HealthSystem>();
+                if (enemyHealth != null)
+                {
+                    Debug.Log($"Gây sát thương cho: {enemy.gameObject.name}");
+                    enemyHealth.TakeDamage(attackDamage);
+
+                    manaSystem?.ChangeMana(5f);
+                }
+            }
         }
     }
 
@@ -207,6 +254,22 @@ public class CharacterBase : MonoBehaviour
     {
         animator.SetTrigger(skillName);
     }
+
+    protected void TryUseSkill(int skillNumber, string skillTrigger)
+    {
+        float manaCost = (skillNumber == 1) ? manaCostSkill1 : manaCostSkill2;
+
+        if (manaSystem.CurrentMana >= manaCost)
+        {
+            manaSystem.ChangeMana(-manaCost); // 🔥 Trừ mana
+            QueueSkill(skillTrigger); // Gọi skill theo tên animation
+        }
+        else
+        {
+            Debug.Log("Không đủ mana để dùng skill!");
+        }
+    }
+
 
     private void OnCollisionEnter2D(Collision2D other)
     {

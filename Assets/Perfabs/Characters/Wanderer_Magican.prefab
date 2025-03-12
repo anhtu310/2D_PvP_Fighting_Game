@@ -30,12 +30,13 @@ Transform:
   m_GameObject: {fileID: 1009709528305796025}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.13, y: 0, z: 0}
+  m_LocalPosition: {x: 6.84, y: -0.2, z: 0}
   m_LocalScale: {x: 3.5, y: 3.5, z: 3.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2761216353265359661}
   - {fileID: 4322473944285237014}
+  - {fileID: 7148117297714795743}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4357338188974383234
@@ -200,13 +201,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d1be455c124f2a45b236b0c309b77c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skill1Key: 0
-  skill2Key: 0
-  isPlayer1: 0
-  firePoint1: {fileID: 4322473944285237014}
-  firePoint2: {fileID: 2761216353265359661}
+  walkSpeed: 2
+  runSpeed: 5
+  jumpForce: 7
+  doubleTapTime: 0.3
+  dashSpeed: 20
+  dashTime: 0.1
+  dashCooldown: 0.5
+  attackZone: {fileID: 3843917745097325015}
+  attackDuration: 0.3
+  attackDamage: 25
+  manaCostSkill1: 20
+  manaCostSkill2: 30
+  maxHealth: 300
+  maxMana: 150
+  manaRegenRate: 2
+  healthSystem: {fileID: 0}
+  manaSystem: {fileID: 0}
   C6_1Prefab: {fileID: 1464377067837349574, guid: af4211205ab8f464d853c8e55857dbe9, type: 3}
   C6_2Prefab: {fileID: 4415495850229547356, guid: 84b51b397c475424b8edc552fa422d9a, type: 3}
+  firePoint1: {fileID: 4322473944285237014}
+  firePoint2: {fileID: 2761216353265359661}
+  damageSkill1: 15
+  damageSkill2: 35
 --- !u!1 &3316110347215919386
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,6 +255,84 @@ Transform:
   m_Children: []
   m_Father: {fileID: 603050423112662893}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3843917745097325015
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7148117297714795743}
+  - component: {fileID: 3181236024288820342}
+  m_Layer: 0
+  m_Name: AttackZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &7148117297714795743
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3843917745097325015}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.364, y: 0.324, z: -0.0050737113}
+  m_LocalScale: {x: 0.28571427, y: 0.28571427, z: 0.28571427}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 603050423112662893}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &3181236024288820342
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3843917745097325015}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.28823042, y: -0.32148838}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 2.108579, y: 2.1750941}
+  m_EdgeRadius: 0
 --- !u!1 &5202669609406252045
 GameObject:
   m_ObjectHideFlags: 0

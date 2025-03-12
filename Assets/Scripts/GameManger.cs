@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
 
         player1.AddComponent<HealthSystem>();
         player2.AddComponent<HealthSystem>();
+        player1.AddComponent<ManaSystem>();
+        player2.AddComponent<ManaSystem>();
     }
 
     GameObject InstantiateCharacter(GameObject prefab, Transform spawnPoint, string tag)
