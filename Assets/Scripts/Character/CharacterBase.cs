@@ -189,9 +189,9 @@ public class CharacterBase : MonoBehaviour
 
     private void DealDamageToEnemies()
     {
-        Collider2D[] enemiesHit = Physics2D.OverlapBoxAll(attackZone.transform.position,
-                                                          attackZone.GetComponent<BoxCollider2D>().size,
-                                                          0f);
+        float attackRadius = attackZone.GetComponent<CircleCollider2D>().radius;
+        Collider2D[] enemiesHit = Physics2D.OverlapCircleAll(attackZone.transform.position, attackRadius);
+
         foreach (Collider2D enemy in enemiesHit)
         {
             if ((CompareTag("Player1") && enemy.CompareTag("Player2")) ||
@@ -208,6 +208,7 @@ public class CharacterBase : MonoBehaviour
             }
         }
     }
+
 
     protected void HealSkill(float healAmount)
     {

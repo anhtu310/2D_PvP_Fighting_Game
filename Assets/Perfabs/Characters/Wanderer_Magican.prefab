@@ -210,7 +210,7 @@ MonoBehaviour:
   dashCooldown: 0.5
   attackZone: {fileID: 3843917745097325015}
   attackDuration: 0.3
-  attackDamage: 25
+  attackDamage: 8
   manaCostSkill1: 20
   manaCostSkill2: 30
   maxHealth: 300
@@ -264,7 +264,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7148117297714795743}
-  - component: {fileID: 3181236024288820342}
+  - component: {fileID: 2561133015713545889}
   m_Layer: 0
   m_Name: AttackZone
   m_TagString: Untagged
@@ -281,14 +281,14 @@ Transform:
   m_GameObject: {fileID: 3843917745097325015}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.364, y: 0.324, z: -0.0050737113}
+  m_LocalPosition: {x: 0.28, y: 0.417, z: -0.0050737113}
   m_LocalScale: {x: 0.28571427, y: 0.28571427, z: 0.28571427}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 603050423112662893}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &3181236024288820342
-BoxCollider2D:
+--- !u!58 &2561133015713545889
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -317,22 +317,12 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.28823042, y: -0.32148838}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 2.108579, y: 2.1750941}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0, y: -0.6727236}
+  m_Radius: 1.1727237
 --- !u!1 &5202669609406252045
 GameObject:
   m_ObjectHideFlags: 0
