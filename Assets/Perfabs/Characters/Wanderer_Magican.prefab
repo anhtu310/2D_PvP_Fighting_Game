@@ -211,8 +211,8 @@ MonoBehaviour:
   attackZone: {fileID: 3843917745097325015}
   attackDuration: 0.3
   attackDamage: 8
-  manaCostSkill1: 20
-  manaCostSkill2: 30
+  manaCostSkill1: 15
+  manaCostSkill2: 40
   maxHealth: 300
   maxMana: 150
   manaRegenRate: 2
@@ -223,7 +223,7 @@ MonoBehaviour:
   firePoint1: {fileID: 4322473944285237014}
   firePoint2: {fileID: 2761216353265359661}
   damageSkill1: 15
-  damageSkill2: 35
+  damageSkill2: 40
 --- !u!1 &3316110347215919386
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,7 +7,7 @@ public class Projectile : MonoBehaviour
     private float direction;
     private float damage;
     private Animator animator;
-    private bool canExplode = true; // Mặc định có hiệu ứng nổ
+    private bool canExplode = true;
     private Collider2D col;
 
     private void Awake()
@@ -38,17 +38,15 @@ public class Projectile : MonoBehaviour
             // Vô hiệu hóa collider để tránh va chạm nhiều lần
             if (col != null) col.enabled = false;
 
-            if (canExplode && animator != null) // Kiểm tra có animation "Explode" không
+            if (canExplode && animator != null)
             {
                 animator.SetTrigger("Explode");
-
-                // Hủy bất kỳ Invoke nào trước đó và hủy object sau 0.2s
                 CancelInvoke("Deactivate");
                 Invoke("Deactivate", 0.3f);
             }
             else
             {
-                Deactivate(); // Nếu không có "Explode", hủy ngay
+                Deactivate();
             }
         }
     }
@@ -58,8 +56,6 @@ public class Projectile : MonoBehaviour
         direction = _direction;
         hit = false;
         transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * Mathf.Sign(direction), transform.localScale.y, transform.localScale.z);
-
-        // Hủy viên đạn sau 1 giây nếu không chạm vào gì
         CancelInvoke("Deactivate");
         Invoke("Deactivate", 1f);
     }

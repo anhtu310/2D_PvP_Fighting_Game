@@ -262,8 +262,8 @@ public class CharacterBase : MonoBehaviour
 
         if (manaSystem.CurrentMana >= manaCost)
         {
-            manaSystem.ChangeMana(-manaCost); // 🔥 Trừ mana
-            QueueSkill(skillTrigger); // Gọi skill theo tên animation
+            manaSystem.ChangeMana(-manaCost);
+            QueueSkill(skillTrigger);
         }
         else
         {

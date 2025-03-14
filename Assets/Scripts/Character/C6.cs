@@ -17,9 +17,6 @@ public class C6 : CharacterBase
         if (Input.GetKeyDown(skill1Key)) TryUseSkill(1, "Skill1");
         if (Input.GetKeyDown(skill2Key)) TryUseSkill(2, "Skill2");
     }
-
-
-    // Gọi từ Animation Event
     public void SpawnSkill1() => StartCoroutine(FireProjectileWithChargeOption(C6_1Prefab, firePoint1, damageSkill1, false,true));
     public void SpawnSkill2() => StartCoroutine(FireProjectileWithChargeOption(C6_2Prefab, firePoint2, damageSkill2, true,false));
 }
