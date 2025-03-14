@@ -2,7 +2,7 @@
 
 public class AttackZone : MonoBehaviour
 {
-    public float damage = 10f; // Người dùng có thể chỉnh trong Inspector
+    public float damage;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -12,7 +12,7 @@ public class AttackZone : MonoBehaviour
             HealthSystem enemyHealth = other.GetComponent<HealthSystem>();
             if (enemyHealth != null)
             {
-                enemyHealth.TakeDamage(damage); // Gây sát thương theo giá trị đặt trong Unity
+                enemyHealth.TakeDamage(damage);
             }
         }
     }
