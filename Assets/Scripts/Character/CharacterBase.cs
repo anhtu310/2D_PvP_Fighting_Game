@@ -250,6 +250,14 @@ public class CharacterBase : MonoBehaviour
         }
     }
 
+    protected IEnumerator ActivateInvincibility(float duration)
+    {
+        IsInvincible = true; // Bật chế độ bất tử
+        yield return new WaitForSeconds(duration);
+        IsInvincible = false; // Tắt chế độ bất tử
+    }
+
+    public bool IsInvincible { get; private set; } = false;
 
     protected void QueueSkill(string skillName)
     {
@@ -270,7 +278,6 @@ public class CharacterBase : MonoBehaviour
             Debug.Log("Không đủ mana để dùng skill!");
         }
     }
-
 
     private void OnCollisionEnter2D(Collision2D other)
     {

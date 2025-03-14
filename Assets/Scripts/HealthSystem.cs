@@ -38,6 +38,8 @@ public class HealthSystem : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        if (character.IsInvincible) return; // Nếu bất tử, bỏ qua sát thương
+
         currentHealth -= damage;
         if (healthBar != null)
             healthBar.SetHealth(currentHealth);
@@ -48,6 +50,8 @@ public class HealthSystem : MonoBehaviour
         if (currentHealth <= 0)
             Die();
     }
+
+
 
     void Die()
     {

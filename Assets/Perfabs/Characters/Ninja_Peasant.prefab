@@ -210,8 +210,8 @@ MonoBehaviour:
   attackZone: {fileID: 2016826389678808683}
   attackDuration: 0.5
   attackDamage: 10
-  manaCostSkill1: 0
-  manaCostSkill2: 0
+  manaCostSkill1: 20
+  manaCostSkill2: 30
   maxHealth: 300
   maxMana: 150
   manaRegenRate: 2
@@ -220,7 +220,7 @@ MonoBehaviour:
   C5Prefab: {fileID: 5220900966304413225, guid: 671f780f6f7cd2f45b097be12da790ad, type: 3}
   firePoint: {fileID: 7749424408990138065}
   damageSkill: 20
-  healAmount: 30
+  defenseDuration: 2
 --- !u!1 &2016826389678808683
 GameObject:
   m_ObjectHideFlags: 0
