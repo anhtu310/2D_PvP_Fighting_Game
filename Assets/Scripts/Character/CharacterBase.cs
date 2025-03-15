@@ -143,15 +143,25 @@ public class CharacterBase : MonoBehaviour
     {
         isDashing = true;
         canDash = false;
+
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0;
+
+        Collider2D col = GetComponent<Collider2D>();
+        col.enabled = false; // Tắt collider để không va chạm với đối thủ
+
         rb.linearVelocity = new Vector2((transform.localScale.x > 0 ? 1 : -1) * dashSpeed, 0);
+
         yield return new WaitForSeconds(dashTime);
+
         rb.gravityScale = originalGravity;
         isDashing = false;
+        col.enabled = true; // Bật lại collider
+
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
     }
+
 
     private void HandleAttack()
     {
