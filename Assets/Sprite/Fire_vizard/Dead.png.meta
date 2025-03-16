@@ -52,7 +52,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -135,8 +135,8 @@ TextureImporter:
         y: 0
         width: 38
         height: 58
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5067989, y: 0.45545596}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -156,9 +156,9 @@ TextureImporter:
         x: 157
         y: 0
         width: 36
-        height: 57
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 58
+      alignment: 9
+      pivot: {x: 0.5287064, y: 0.43654424}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -178,9 +178,9 @@ TextureImporter:
         x: 284
         y: 0
         width: 37
-        height: 55
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 58
+      alignment: 9
+      pivot: {x: 0.5287064, y: 0.4365442}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -200,9 +200,9 @@ TextureImporter:
         x: 414
         y: 0
         width: 40
-        height: 45
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 58
+      alignment: 9
+      pivot: {x: 0.5287064, y: 0.4365442}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -222,9 +222,9 @@ TextureImporter:
         x: 542
         y: 0
         width: 56
-        height: 22
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 58
+      alignment: 9
+      pivot: {x: 0.5287064, y: 0.4365442}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -244,9 +244,9 @@ TextureImporter:
         x: 670
         y: 0
         width: 64
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 58
+      alignment: 9
+      pivot: {x: 0.5287064, y: 0.4365442}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -263,7 +263,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 6d3538d394f05eb458c605b5d0aaa88d
     internalID: 0
     vertices: []
     indices: 

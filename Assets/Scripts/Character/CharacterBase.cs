@@ -51,10 +51,23 @@ public class CharacterBase : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+
+        // Nếu không tìm thấy Animator trong object chính, tìm trong child objects
+        if (animator == null)
+        {
+            animator = GetComponentInChildren<Animator>();
+            if (animator == null)
+            {
+                Debug.LogError($"[{gameObject.name}] Animator is NULL! Kiểm tra lại Prefab của {gameObject.name}.");
+            }
+        }
+
         healthSystem = GetComponent<HealthSystem>();
         manaSystem = GetComponent<ManaSystem>();
+
         InitializeKeys();
     }
+
 
     private void InitializeKeys()
     {
@@ -294,9 +307,18 @@ public class CharacterBase : MonoBehaviour
         if (other.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
-            animator.SetBool("IsGrounded", true);
+
+            if (animator == null)
+            {
+                Debug.LogError("Animator is NULL! Kiểm tra xem Animator có được gán trong Start() không.");
+            }
+            else
+            {
+                animator.SetBool("IsGrounded", true);
+            }
         }
     }
+
 
     private void OnCollisionExit2D(Collision2D other)
     {
