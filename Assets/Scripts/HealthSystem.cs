@@ -51,11 +51,20 @@ public class HealthSystem : MonoBehaviour
             Die();
     }
 
-
-
     void Die()
     {
         animator.SetTrigger("Die");
+        StartCoroutine(ShowKOThenPause());
+    }
+
+    IEnumerator ShowKOThenPause()
+    {
+        CameraManage cam = FindAnyObjectByType<CameraManage>();
+        cam.showKO();
+
+        yield return new WaitForSecondsRealtime(2f); // chờ 1s mà không bị ảnh hưởng bởi Time.timeScale
+
+        Time.timeScale = 0;
     }
 
     IEnumerator FlashDamageEffect()

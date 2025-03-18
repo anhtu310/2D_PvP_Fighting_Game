@@ -7,9 +7,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform spawnPoint1, spawnPoint2;
     [SerializeField] private List<Sprite> maps;
     [SerializeField] private GameObject map;
+    HealthSystem healthSystem;
 
     void Start() => SpawnCharacters();
-
     void SpawnCharacters()
     {
         int p1Index = PlayerPrefs.GetInt("Player1Index", 0);

@@ -19,7 +19,7 @@ public class C1 : CharacterBase
         if (Input.GetKeyDown(skill2Key)) TryUseMeleeSkill();
     }
 
-    public void SpawnSkill1() => StartCoroutine(FireProjectileWithChargeOption(C1_1Prefab, firePoint1, damageSkill1, false, true));
+    public void SpawnSkill1() => StartCoroutine(FireProjectileWithChargeOption(C1_1Prefab, firePoint1, damageSkill1, true, false));
 
     private void TryUseMeleeSkill()
     {
