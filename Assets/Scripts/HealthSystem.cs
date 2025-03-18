@@ -38,7 +38,7 @@ public class HealthSystem : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        if (character.IsInvincible) return; // Nếu bất tử, bỏ qua sát thương
+        if (character.IsInvincible) return;
 
         currentHealth -= damage;
         if (healthBar != null)
@@ -53,8 +53,37 @@ public class HealthSystem : MonoBehaviour
 
     void Die()
     {
+
         animator.SetTrigger("Die");
         StartCoroutine(ShowKOThenPause());
+        DisableAllComponentsExceptAnimator(gameObject);
+
+        string opponentTag = CompareTag("Player1") ? "Player2" : "Player1";
+        GameObject opponent = GameObject.FindGameObjectWithTag(opponentTag);
+
+        if (opponent != null)
+        {
+            Animator opponentAnimator = opponent.GetComponent<Animator>();
+            if (opponentAnimator != null)
+            {
+                opponentAnimator.updateMode = AnimatorUpdateMode.UnscaledTime;
+            }
+
+            DisableAllComponentsExceptAnimator(opponent);
+        }
+    }
+
+    void DisableAllComponentsExceptAnimator(GameObject obj)
+    {
+        Component[] components = obj.GetComponents<Component>();
+
+        foreach (Component component in components)
+        {
+            if (component is Animator) continue; // Giữ lại Animator
+            if (component is MonoBehaviour script) script.enabled = false; // Vô hiệu hóa script
+        }
+
+        obj.SetActive(true); // Đảm bảo GameObject vẫn hoạt động
     }
 
     IEnumerator ShowKOThenPause()
@@ -62,7 +91,7 @@ public class HealthSystem : MonoBehaviour
         CameraManage cam = FindAnyObjectByType<CameraManage>();
         cam.showKO();
 
-        yield return new WaitForSecondsRealtime(2f); // chờ 1s mà không bị ảnh hưởng bởi Time.timeScale
+        yield return new WaitForSecondsRealtime(2f);
 
         Time.timeScale = 0;
     }

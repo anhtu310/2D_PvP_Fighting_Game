@@ -37,7 +37,7 @@ public class CameraManage : MonoBehaviour
     public void showKO()
     {
         ko.SetActive(true);
-        ko.transform.localScale = Vector3.one * 2f; // Scale lên x2 trước
+        ko.transform.localScale = Vector3.one * 3f; // Scale lên x2 trước
         StartCoroutine(ScaleDownKO());
     }
 
