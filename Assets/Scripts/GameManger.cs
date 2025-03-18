@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -7,7 +8,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform spawnPoint1, spawnPoint2;
     [SerializeField] private List<Sprite> maps;
     [SerializeField] private GameObject map;
-
+    [SerializeField] private List<Sprite> characterAvatars; // Danh sách avatar của nhân vật
+    [SerializeField] private Image avatarImage1, avatarImage2;
     void Start() => SpawnCharacters();
 
     void SpawnCharacters()
@@ -15,7 +17,9 @@ public class GameManager : MonoBehaviour
         int p1Index = PlayerPrefs.GetInt("Player1Index", 0);
         int p2Index = PlayerPrefs.GetInt("Player2Index", 0);
         int mapIndex = PlayerPrefs.GetInt("MapIndex", 0);
-
+        avatarImage1.sprite = characterAvatars[p1Index];
+        avatarImage2.sprite = characterAvatars[p2Index];
+        avatarImage2.rectTransform.localScale = new Vector3(-1, 1, 1);
         GameObject player1 = InstantiateCharacter(characterPrefabs[p1Index], spawnPoint1, "Player1");
         GameObject player2 = InstantiateCharacter(characterPrefabs[p2Index], spawnPoint2, "Player2");
 
