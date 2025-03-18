@@ -366,7 +366,7 @@ MonoBehaviour:
   C1_1Prefab: {fileID: 8977106317212022198, guid: b7d362e8be944ab429d63f48b4ae7f3f, type: 3}
   firePoint1: {fileID: 7769193160117727085}
   meleeSkill1Zone: {fileID: 4040965761809576394}
-  damageSkill1: 15
+  damageSkill1: 150
   meleeSkillDuration: 0.5
   meleeSkillDamage: 30
 --- !u!95 &319708922598768186
