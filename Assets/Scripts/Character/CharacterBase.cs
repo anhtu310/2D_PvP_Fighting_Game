@@ -169,8 +169,8 @@ public class CharacterBase : MonoBehaviour
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0;
 
-        Collider2D col = GetComponent<Collider2D>();
-        col.enabled = false; // Tắt collider để không va chạm với đối thủ
+        //Collider2D col = GetComponent<Collider2D>();
+        //col.enabled = false; // Tắt collider để không va chạm với đối thủ
 
         rb.linearVelocity = new Vector2((transform.localScale.x > 0 ? 1 : -1) * dashSpeed, 0);
 		if (dashSound != null) dashSound.Play();
@@ -178,7 +178,7 @@ public class CharacterBase : MonoBehaviour
 
         rb.gravityScale = originalGravity;
         isDashing = false;
-        col.enabled = true; // Bật lại collider
+        //col.enabled = true; // Bật lại collider
 
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
@@ -302,14 +302,16 @@ public class CharacterBase : MonoBehaviour
 
         if (manaSystem.CurrentMana >= manaCost)
         {
-            manaSystem.ChangeMana(-manaCost);
             QueueSkill(skillTrigger);
+            manaSystem.ChangeMana(-manaCost);
+			rb.linearVelocity = Vector2.zero;
 		}
         else
         {
             Debug.Log("Không đủ mana để dùng skill!");
         }
     }
+
 
     private void OnCollisionEnter2D(Collision2D other)
     {

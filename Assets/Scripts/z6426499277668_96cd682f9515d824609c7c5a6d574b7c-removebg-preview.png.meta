@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: cdf7b1fe451d0ba4b947971bab44b05c
+guid: 7d98065c3c86a9a479149714c8b3bd40
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4215324328162372451
-    second: Screenshot 2025-02-25 212528_0
+      213: 4050227486140507456
+    second: z6426499277668_96cd682f9515d824609c7c5a6d574b7c-removebg-preview_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -96,30 +96,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Screenshot 2025-02-25 212528_0
+      name: z6426499277668_96cd682f9515d824609c7c5a6d574b7c-removebg-preview_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 218
-        height: 199
+        x: 69
+        y: 40
+        width: 533
+        height: 284
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d94d1d67bd82085c0800000000000000
-      internalID: -4215324328162372451
+      spriteID: 045adea807c453830800000000000000
+      internalID: 4050227486140507456
       vertices: []
       indices: 
       edges: []
@@ -138,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Screenshot 2025-02-25 212528_0: -4215324328162372451
+      z6426499277668_96cd682f9515d824609c7c5a6d574b7c-removebg-preview_0: 4050227486140507456
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
