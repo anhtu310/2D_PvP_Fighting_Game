@@ -13,7 +13,7 @@ public class CameraManage : MonoBehaviour
     [SerializeField] private float fixedY = 0f; // Giữ nguyên chiều cao camera
     [SerializeField] private float defaultZ = -10f; // Đảm bảo camera giữ khoảng cách
     [SerializeField] private GameObject ko;
-    HealthSystem healthSystem;
+    [SerializeField] private GameObject fight;
 
     void LateUpdate()
     {
@@ -27,6 +27,7 @@ public class CameraManage : MonoBehaviour
         
        Vector3 camPos = Camera.main.transform.position;
         camPos.z = 0;
+        fight.transform.position = camPos;
         ko.transform.localPosition = camPos;
 
         // Cập nhật vị trí camera
@@ -34,6 +35,35 @@ public class CameraManage : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, targetPosition, smoothSpeed * Time.deltaTime);
     }
 
+    public void showFight()
+    {
+        StartCoroutine(DelayShowFight());
+    }
+    IEnumerator DelayShowFight()
+    {
+        yield return new WaitForSecondsRealtime(1.5f);
+        fight.SetActive(true);
+        fight.transform.localScale = Vector3.one * 3.5f;
+        StartCoroutine(ScaleDownFight());
+    }
+
+    IEnumerator ScaleDownFight()
+    {
+        Vector3 targetScale = Vector3.one; // scale mặc định là (1,1,1)
+        Vector3 startScale = fight.transform.localScale;
+        float duration = 1f; // thời gian thu nhỏ về
+        float time = 0f;
+
+        while (time < duration)
+        {
+            time += Time.unscaledDeltaTime; // không bị ảnh hưởng bởi Time.timeScale
+            fight.transform.localScale = Vector3.Lerp(startScale, targetScale, time / duration);
+            yield return null;
+        }
+
+        fight.transform.localScale = targetScale;
+        fight.SetActive(false);
+    }
     public void showKO()
     {
         ko.SetActive(true);
@@ -45,7 +75,7 @@ public class CameraManage : MonoBehaviour
     {
         Vector3 targetScale = Vector3.one; // scale mặc định là (1,1,1)
         Vector3 startScale = ko.transform.localScale;
-        float duration = 0.5f; // thời gian thu nhỏ về
+        float duration = 1f; // thời gian thu nhỏ về
         float time = 0f;
 
         while (time < duration)

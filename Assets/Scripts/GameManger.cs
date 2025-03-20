@@ -56,5 +56,6 @@ public class GameManager : MonoBehaviour
     {
         CameraManage cameraManager = FindFirstObjectByType<CameraManage>();
         if (cameraManager != null) cameraManager.SetPlayers(player1, player2);
+        cameraManager.showFight();
     }
 }

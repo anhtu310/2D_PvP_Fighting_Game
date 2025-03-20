@@ -211,7 +211,7 @@ MonoBehaviour:
   attackZone: {fileID: 3843917745097325015}
   attackDuration: 0.3
   attackDamage: 8
-  manaCostSkill1: 15
+  manaCostSkill1: 20
   manaCostSkill2: 40
   maxHealth: 300
   maxMana: 150
@@ -222,7 +222,7 @@ MonoBehaviour:
   C6_2Prefab: {fileID: 4415495850229547356, guid: 84b51b397c475424b8edc552fa422d9a, type: 3}
   firePoint1: {fileID: 4322473944285237014}
   firePoint2: {fileID: 2761216353265359661}
-  damageSkill1: 15
+  damageSkill1: 20
   damageSkill2: 40
 --- !u!1 &3316110347215919386
 GameObject:
