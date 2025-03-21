@@ -47,7 +47,15 @@ public class CharacterBase : MonoBehaviour
     private float lastLeftPressTime = -1f;
     private float lastRightPressTime = -1f;
 
-    protected virtual void Start()
+    //Sound
+	public AudioSource attackSound;
+	public AudioSource jumpSound;
+	public AudioSource dashSound;
+	public AudioSource hitSound;
+	public AudioSource skill1Sound;
+	public AudioSource skill2Sound;
+
+	protected virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -141,7 +149,8 @@ public class CharacterBase : MonoBehaviour
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             animator.SetTrigger("Jump");
             isGrounded = false;
-        }
+			if (jumpSound != null) jumpSound.Play();
+		}
     }
 
     private void HandleDash()
@@ -164,8 +173,8 @@ public class CharacterBase : MonoBehaviour
         //col.enabled = false; // Tắt collider để không va chạm với đối thủ
 
         rb.linearVelocity = new Vector2((transform.localScale.x > 0 ? 1 : -1) * dashSpeed, 0);
-
-        yield return new WaitForSeconds(dashTime);
+		if (dashSound != null) dashSound.Play();
+		yield return new WaitForSeconds(dashTime);
 
         rb.gravityScale = originalGravity;
         isDashing = false;
@@ -186,8 +195,8 @@ public class CharacterBase : MonoBehaviour
 
             animator.SetFloat("AttackType", attackComboStep);
             animator.SetTrigger("Attack");
-
-            StartCoroutine(ActivateAttackZone());
+			
+			StartCoroutine(ActivateAttackZone());
         }
     }
 
@@ -225,8 +234,8 @@ public class CharacterBase : MonoBehaviour
                 {
                     Debug.Log($"Gây sát thương cho: {enemy.gameObject.name}");
                     enemyHealth.TakeDamage(attackDamage);
-
-                    manaSystem?.ChangeMana(5f);
+					if (hitSound != null) hitSound.Play();
+					manaSystem?.ChangeMana(5f);
                 }
             }
         }
@@ -282,9 +291,19 @@ public class CharacterBase : MonoBehaviour
 
     public bool IsInvincible { get; private set; } = false;
 
-    protected void QueueSkill(string skillName)
+    protected void QueueSkill(string skillName, int skillNumber)
     {
-        animator.SetTrigger(skillName);
+        float manaCost = (skillNumber == 1) ? manaCostSkill1 : manaCostSkill2;
+        if (manaSystem.CurrentMana >= manaCost)
+        {
+                animator.SetTrigger(skillName);
+                manaSystem.ChangeMana(-manaCost);
+                rb.linearVelocity = Vector2.zero;
+        }
+        else
+        {
+            Debug.Log("Không đủ mana để dùng skill!");
+        }
     }
 
     protected bool CheckMana(int skillNumber, bool isAnimation)
@@ -293,6 +312,7 @@ public class CharacterBase : MonoBehaviour
 
         if (manaSystem.CurrentMana >= manaCost)
         {
+
             if(!isAnimation)
             {
                 manaSystem.ChangeMana(-manaCost);
@@ -335,4 +355,19 @@ public class CharacterBase : MonoBehaviour
             animator.SetBool("IsGrounded", false);
         }
     }
+	private void PlaySoundAttack()
+	{
+		if (attackSound != null) attackSound.Play();
+	}
+
+
+	private void PlaySoundSkill1()
+    {
+        if (skill1Sound != null) skill1Sound.Play();
+    }
+
+	private void PlaySoundSkill2()
+	{
+		if (skill2Sound != null) skill2Sound.Play();
+	}
 }

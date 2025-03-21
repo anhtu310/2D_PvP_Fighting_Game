@@ -14,8 +14,10 @@ public class CameraManage : MonoBehaviour
     [SerializeField] private float defaultZ = -10f; // Đảm bảo camera giữ khoảng cách
     [SerializeField] private GameObject ko;
     [SerializeField] private GameObject fight;
+	public AudioSource fightSound;
+	public AudioSource koSound;
 
-    void LateUpdate()
+	void LateUpdate()
     {
         if (player1 == null || player2 == null) return;
 
@@ -38,6 +40,7 @@ public class CameraManage : MonoBehaviour
     public void showFight()
     {
         StartCoroutine(DelayShowFight());
+        
     }
     IEnumerator DelayShowFight()
     {
@@ -45,7 +48,8 @@ public class CameraManage : MonoBehaviour
         fight.SetActive(true);
         fight.transform.localScale = Vector3.one * 3.5f;
         StartCoroutine(ScaleDownFight());
-    }
+		PlaySoundFight();
+	}
 
     IEnumerator ScaleDownFight()
     {
@@ -69,6 +73,7 @@ public class CameraManage : MonoBehaviour
         ko.SetActive(true);
         ko.transform.localScale = Vector3.one * 3f; // Scale lên x2 trước
         StartCoroutine(ScaleDownKO());
+        PlaySoundKO();
     }
 
     IEnumerator ScaleDownKO()
@@ -94,4 +99,13 @@ public class CameraManage : MonoBehaviour
         player1 = p1;
         player2 = p2;
     }
+	public void PlaySoundFight()
+	{
+		if (fightSound != null) fightSound.Play();
+	}
+
+	public void PlaySoundKO()
+	{
+		if (koSound != null) koSound.Play();
+	}
 }

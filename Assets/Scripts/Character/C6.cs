@@ -18,14 +18,14 @@ public class C6 : CharacterBase
         {
             //if (CheckMana(1, true))
             //{
-                QueueSkill("Skill1");
+                QueueSkill("Skill1", 1);
             //}
         }
         if (Input.GetKeyDown(skill2Key))
         {
             //if (!CheckMana(2, true))
             //{
-                QueueSkill("Skill2");
+                QueueSkill("Skill2", 2);
             //}
         }
     }
