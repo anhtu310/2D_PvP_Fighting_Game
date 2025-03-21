@@ -1225,7 +1225,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backgroundMusicSource: {fileID: 1193918787}
   vfxAudioSource: {fileID: 582645678}
-  backgroundMusicClip: {fileID: 8300000, guid: e7acd9ca54ff2c548825d7380c79d0ca, type: 3}
+  backgroundMusicClip: {fileID: 8300000, guid: 457a80940008f5b44aa2e16174664329, type: 3}
   buttonClip: {fileID: 8300000, guid: c4625f94dc6fd5440a6666e70a44d66a, type: 3}
 --- !u!4 &2076008517
 Transform:
