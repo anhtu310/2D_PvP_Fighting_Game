@@ -40,6 +40,7 @@ public class CameraManage : MonoBehaviour
     public void showFight()
     {
         StartCoroutine(DelayShowFight());
+        PlaySoundFight();
         
     }
     IEnumerator DelayShowFight()
@@ -48,7 +49,6 @@ public class CameraManage : MonoBehaviour
         fight.SetActive(true);
         fight.transform.localScale = Vector3.one * 3.5f;
         StartCoroutine(ScaleDownFight());
-		PlaySoundFight();
 	}
 
     IEnumerator ScaleDownFight()

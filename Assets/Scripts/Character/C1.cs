@@ -19,7 +19,7 @@ public class C1 : CharacterBase
         {
             if(CheckMana(1,true))
             {
-                QueueSkill("Skill2", 1);
+                QueueSkill("Skill2");
             }
         }
         if (Input.GetKeyDown(skill2Key)) TryUseMeleeSkill();

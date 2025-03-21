@@ -291,19 +291,9 @@ public class CharacterBase : MonoBehaviour
 
     public bool IsInvincible { get; private set; } = false;
 
-    protected void QueueSkill(string skillName, int skillNumber)
+    protected void QueueSkill(string skillName)
     {
-        float manaCost = (skillNumber == 1) ? manaCostSkill1 : manaCostSkill2;
-        if (manaSystem.CurrentMana >= manaCost)
-        {
-                animator.SetTrigger(skillName);
-                manaSystem.ChangeMana(-manaCost);
-                rb.linearVelocity = Vector2.zero;
-        }
-        else
-        {
-            Debug.Log("Không đủ mana để dùng skill!");
-        }
+        animator.SetTrigger(skillName);
     }
 
     protected bool CheckMana(int skillNumber, bool isAnimation)
