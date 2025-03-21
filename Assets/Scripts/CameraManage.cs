@@ -41,7 +41,7 @@ public class CameraManage : MonoBehaviour
     }
     IEnumerator DelayShowFight()
     {
-        yield return new WaitForSecondsRealtime(1.5f);
+        yield return new WaitForSecondsRealtime(1f);
         fight.SetActive(true);
         fight.transform.localScale = Vector3.one * 3.5f;
         StartCoroutine(ScaleDownFight());

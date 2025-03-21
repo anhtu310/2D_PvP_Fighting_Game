@@ -12,16 +12,37 @@ public class C2 : CharacterBase
     {
         base.Update();
 
-        if (Input.GetKeyDown(skill1Key)) TryUseSkill(1, "Skill1");
-        if (Input.GetKeyDown(skill2Key)) TryUseSkill(2, "Skill2");
+        if (Input.GetKeyDown(skill1Key))
+        {
+            //if(CheckMana(1,true))
+            //{
+                QueueSkill("Skill1");
+            //}
+        }
+        if (Input.GetKeyDown(skill2Key))
+        {
+            //if (CheckMana(2, true))
+            //{
+                QueueSkill("Skill2");
+            //}
+        }
     }
 
 
-    public void SpawnSkill1() => StartCoroutine(FireProjectileWithChargeOption(C2Prefab, firePoint, damageSkill, false, false));
+    public void SpawnSkill1()
+    {
+        //if (!CheckMana(1, false))
+        //{
+            StartCoroutine(FireProjectileWithChargeOption(C2Prefab, firePoint, damageSkill, false, false));
+        //}
+    }
 
     public void Heal()
     {
-        HealSkill(healAmount);
+        //if(!CheckMana(2, false))
+        //{
+            HealSkill(healAmount);
+        //}
     }
     
 }

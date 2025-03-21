@@ -15,11 +15,23 @@ public class C1 : CharacterBase
     {
         base.Update();
 
-        if (Input.GetKeyDown(skill1Key)) TryUseSkill(1, "Skill1");
+        if (Input.GetKeyDown(skill1Key))
+        {
+            if(CheckMana(1,true))
+            {
+                QueueSkill("Skill2");
+            }
+        }
         if (Input.GetKeyDown(skill2Key)) TryUseMeleeSkill();
     }
 
-    public void SpawnSkill1() => StartCoroutine(FireProjectileWithChargeOption(C1_1Prefab, firePoint1, damageSkill1, true, false));
+    public void SpawnSkill1()
+    {
+        if(CheckMana(1,false))
+        {
+            StartCoroutine(FireProjectileWithChargeOption(C1_1Prefab, firePoint1, damageSkill1, true, false));
+        }
+    }
 
     private void TryUseMeleeSkill()
     {
@@ -27,7 +39,8 @@ public class C1 : CharacterBase
 
         if (manaSystem.CurrentMana >= manaCostSkill2)
         {
-            QueueSkill("Skill2");  // Gọi animation Skill2 
+            Animator animator = GetComponent<Animator>();
+            animator.SetTrigger("Skill2");
             manaSystem.ChangeMana(-manaCostSkill2);
             Debug.Log($"[{gameObject.name}] Đã sử dụng chiêu, mana còn lại: {manaSystem.CurrentMana}");
             StartCoroutine(ActivateMeleeSkill());

@@ -243,34 +243,34 @@ public class CharacterBase : MonoBehaviour
 
     protected IEnumerator FireProjectileWithChargeOption(GameObject projectilePrefab, Transform firePoint, float damage, bool canExplode, bool isCharging)
     {
-        GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
-        projectile.SetActive(true);
-        projectile.tag = CompareTag("Player1") ? "Projectile_P1" : "Projectile_P2";
+            GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
+            projectile.SetActive(true);
+            projectile.tag = CompareTag("Player1") ? "Projectile_P1" : "Projectile_P2";
 
-        Animator projAnimator = projectile.GetComponent<Animator>();
-        if (projAnimator != null) projAnimator.enabled = false;
+            Animator projAnimator = projectile.GetComponent<Animator>();
+            if (projAnimator != null) projAnimator.enabled = false;
 
-        if (isCharging)
-        {
-            // Nếu đang charge, đợi một thời gian trước khi bắn
-            yield return new WaitForSeconds(0.2f);
-            if (projAnimator != null) projAnimator.enabled = true;
-        }
-        else
-        {
-            // Nếu không charge, bật animation ngay lập tức
-            if (projAnimator != null) projAnimator.enabled = true;
-        }
+            if (isCharging)
+            {
+                // Nếu đang charge, đợi một thời gian trước khi bắn
+                yield return new WaitForSeconds(0.2f);
+                if (projAnimator != null) projAnimator.enabled = true;
+            }
+            else
+            {
+                // Nếu không charge, bật animation ngay lập tức
+                if (projAnimator != null) projAnimator.enabled = true;
+            }
 
-        float direction = transform.localScale.x > 0 ? 1 : -1;
-        Projectile projScript = projectile.GetComponent<Projectile>();
+            float direction = transform.localScale.x > 0 ? 1 : -1;
+            Projectile projScript = projectile.GetComponent<Projectile>();
 
-        if (projScript != null)
-        {
-            projScript.SetDirection(direction);
-            projScript.SetDamage(damage);
-            projScript.SetCanExplode(canExplode);
-        }
+            if (projScript != null)
+            {
+                projScript.SetDirection(direction);
+                projScript.SetDamage(damage);
+                projScript.SetCanExplode(canExplode);
+            }
     }
 
     protected IEnumerator ActivateInvincibility(float duration)
@@ -287,23 +287,28 @@ public class CharacterBase : MonoBehaviour
         animator.SetTrigger(skillName);
     }
 
-    protected void TryUseSkill(int skillNumber, string skillTrigger)
+    protected bool CheckMana(int skillNumber, bool isAnimation)
     {
         float manaCost = (skillNumber == 1) ? manaCostSkill1 : manaCostSkill2;
 
         if (manaSystem.CurrentMana >= manaCost)
         {
-            QueueSkill(skillTrigger);
-            manaSystem.ChangeMana(-manaCost);
-            rb.linearVelocity = Vector2.zero;
+            if(!isAnimation)
+            {
+                manaSystem.ChangeMana(-manaCost);
+                rb.linearVelocity = Vector2.zero;
+                return true;
+            }else
+            {
+                return true;
+            }
         }
         else
         {
             Debug.Log("Không đủ mana để dùng skill!");
+            return false;
         }
     }
-
-
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Ground"))

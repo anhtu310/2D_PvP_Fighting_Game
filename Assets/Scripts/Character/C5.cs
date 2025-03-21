@@ -12,11 +12,20 @@ public class C5 : CharacterBase
 	{
 		base.Update();
 
-		if (Input.GetKeyDown(skill1Key)) TryUseSkill(1, "Skill1");
+		if (Input.GetKeyDown(skill1Key))
+		{
+			//if(CheckMana(1,true))
+			//{
+				QueueSkill("Skill1");
+			//}
+		}
 		if (Input.GetKeyDown(skill2Key))
 		{
-			TryUseSkill(2, "Skill2");
-			ActivateSkill2(duration);
+			//if (CheckMana(2,true))
+			//{
+                QueueSkill("Skill2");
+                ActivateSkill2(duration);
+            //}
         }
 	}
 
@@ -25,6 +34,7 @@ public class C5 : CharacterBase
 
     public void ActivateSkill2(float duration)
     {
+
         StartCoroutine(ActivateInvincibility(duration));
     }
 
