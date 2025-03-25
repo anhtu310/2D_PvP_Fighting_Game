@@ -55,7 +55,7 @@ public class CameraManage : MonoBehaviour
     {
         Vector3 targetScale = Vector3.one; // scale mặc định là (1,1,1)
         Vector3 startScale = fight.transform.localScale;
-        float duration = 1f; // thời gian thu nhỏ về
+        float duration = 1.5f; // thời gian thu nhỏ về
         float time = 0f;
 
         while (time < duration)
