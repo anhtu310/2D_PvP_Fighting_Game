@@ -45,17 +45,18 @@ public class CameraManage : MonoBehaviour
     }
     IEnumerator DelayShowFight()
     {
-        yield return new WaitForSecondsRealtime(1f);
-        fight.SetActive(true);
-        fight.transform.localScale = Vector3.one * 3.5f;
+        fight.SetActive(true);  // Hiển thị ngay lập tức
+        fight.transform.localScale = Vector3.one * 2.5f;
+        yield return new WaitForSecondsRealtime(1f); // Sau 1s mới thu nhỏ dần
         StartCoroutine(ScaleDownFight());
-	}
+    }
+
 
     IEnumerator ScaleDownFight()
     {
         Vector3 targetScale = Vector3.one; // scale mặc định là (1,1,1)
         Vector3 startScale = fight.transform.localScale;
-        float duration = 1.5f; // thời gian thu nhỏ về
+        float duration = 1f; // thời gian thu nhỏ về
         float time = 0f;
 
         while (time < duration)
