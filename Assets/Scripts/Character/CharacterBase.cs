@@ -184,19 +184,21 @@ public class CharacterBase : MonoBehaviour
         canDash = true;
     }
 
-
+    int countAttack;
     private void HandleAttack()
     {
         if (Input.GetKeyDown(attackKey))
         {
             lastAttackTime = Time.time;
             attackComboStep++;
-            if (attackComboStep > 2) attackComboStep = 1;
+            countAttack = Mathf.Clamp(countAttack + 1, 0, 3); // Giới hạn tối đa là 3
+
+            attackDamage = (countAttack >= 3) ? attackDamage * 2 : attackDamage;
 
             animator.SetFloat("AttackType", attackComboStep);
             animator.SetTrigger("Attack");
-			
-			StartCoroutine(ActivateAttackZone());
+
+            StartCoroutine(ActivateAttackZone());
         }
     }
 
@@ -214,6 +216,7 @@ public class CharacterBase : MonoBehaviour
     {
         if (Time.time - lastAttackTime > comboResetTime)
         {
+            countAttack = 0;
             attackComboStep = 0;
             animator.SetFloat("AttackType", 0);
         }
@@ -333,6 +336,27 @@ public class CharacterBase : MonoBehaviour
             {
                 animator.SetBool("IsGrounded", true);
             }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log($"Va chạm với: {collision.gameObject.name} (Tag: {collision.tag})");
+
+        if (collision.CompareTag("Possion"))
+        {
+            healthSystem.TakeDamage(30);
+            Destroy(collision.gameObject);
+        }
+        else if (collision.CompareTag("Heal"))
+        {
+            HealSkill(30);
+            Destroy(collision.gameObject);
+        }
+        else if (collision.CompareTag("Speed"))
+        {
+            runSpeed += 3;
+            Destroy(collision.gameObject);
         }
     }
 
