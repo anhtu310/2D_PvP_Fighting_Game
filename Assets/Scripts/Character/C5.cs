@@ -24,18 +24,25 @@ public class C5 : CharacterBase
 			if (CheckMana(2, true))
 			{
 				QueueSkill("Skill2");
-                ActivateSkill2(duration);
 		}
 	}
 	}
 
 
-	public void SpawnSkill1() => StartCoroutine(FireProjectileWithChargeOption(C5Prefab, firePoint, damageSkill, false, false));
+	public void SpawnSkill1()
+	{
+		if(CheckMana(1, false))
+		{
+            StartCoroutine(FireProjectileWithChargeOption(C5Prefab, firePoint, damageSkill, false, false));
+        }
+	}
 
     public void ActivateSkill2(float duration)
     {
-
-        StartCoroutine(ActivateInvincibility(duration));
+		if(CheckMana(2, false))
+		{
+            StartCoroutine(ActivateInvincibility(duration));
+        }
     }
 
 }

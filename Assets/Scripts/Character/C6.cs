@@ -19,15 +19,15 @@ public class C6 : CharacterBase
             if (CheckMana(1, true))
             {
                 QueueSkill("Skill1");
+            }
         }
-    }
         if (Input.GetKeyDown(skill2Key))
         {
             if (CheckMana(2, true))
             {
                 QueueSkill("Skill2");
+            }
         }
-    }
     }
     public void SpawnSkill1()
     {
