@@ -103,6 +103,18 @@ public class HealthSystem : MonoBehaviour
         spriteRenderer.color = Color.white;
     }
 
+    public void SetHealth(float health)
+    {
+        currentHealth = Mathf.Clamp(health, 0, character.maxHealth);
+        if (healthBar != null)
+            healthBar.SetHealth(currentHealth);
+    }
+
+    public float GetCurrentHealth()
+    {
+        return currentHealth;
+    }
+
     public void Heal(float amount)
     {
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, character.maxHealth);

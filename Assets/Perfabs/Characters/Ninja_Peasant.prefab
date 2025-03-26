@@ -213,6 +213,7 @@ MonoBehaviour:
   dashSpeed: 20
   dashTime: 0.1
   dashCooldown: 0.5
+  transformPrefab: {fileID: 5901388171025742857, guid: a76e5ed1b5b1c6d4c85c229472c03fee, type: 3}
   attackZone: {fileID: 2016826389678808683}
   attackDuration: 0.3
   attackDamage: 10

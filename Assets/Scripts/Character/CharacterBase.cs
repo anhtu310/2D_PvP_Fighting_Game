@@ -11,6 +11,9 @@ public class CharacterBase : MonoBehaviour
     public float dashTime = 0.1f;
     public float dashCooldown = 0.5f;
 
+    public GameObject transformPrefab; // Prefab mới khi dùng Skill3
+
+
     public GameObject attackZone;
     public float attackDuration = 0.5f;
     public float attackDamage = 10f;
@@ -28,6 +31,7 @@ public class CharacterBase : MonoBehaviour
     protected KeyCode attackKey;
     protected KeyCode skill1Key;
     protected KeyCode skill2Key;
+    protected KeyCode skill3Key;
 
     private float attackComboStep = 0;
     private float lastAttackTime = 0f;
@@ -43,6 +47,8 @@ public class CharacterBase : MonoBehaviour
     private bool isRunning = false;
     private bool isDashing = false;
     private bool canDash = true;
+    private bool isTransformed = false;
+    private float originalAttackDamage;
 
     private float lastLeftPressTime = -1f;
     private float lastRightPressTime = -1f;
@@ -54,8 +60,9 @@ public class CharacterBase : MonoBehaviour
 	public AudioSource hitSound;
 	public AudioSource skill1Sound;
 	public AudioSource skill2Sound;
+    public AudioSource transformSound;
 
-	protected virtual void Start()
+    protected virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -70,6 +77,7 @@ public class CharacterBase : MonoBehaviour
             }
         }
 
+        originalAttackDamage = attackDamage;
         healthSystem = GetComponent<HealthSystem>();
         manaSystem = GetComponent<ManaSystem>();
 
@@ -88,6 +96,7 @@ public class CharacterBase : MonoBehaviour
             attackKey = KeyCode.J;
             skill1Key = KeyCode.K;
             skill2Key = KeyCode.L;
+            skill3Key = KeyCode.U;
         }
         else if (CompareTag("Player2"))
         {
@@ -98,6 +107,7 @@ public class CharacterBase : MonoBehaviour
             attackKey = KeyCode.Keypad1;
             skill1Key = KeyCode.Keypad2;
             skill2Key = KeyCode.Keypad3;
+            skill3Key = KeyCode.Keypad4;
         }
     }
 
@@ -108,7 +118,80 @@ public class CharacterBase : MonoBehaviour
         HandleDash();
         HandleAttack();
         CheckComboReset();
+
+        // Nếu đã biến hình thì không cho dùng skill
+        if (isTransformed) return;
+
+        // Kiểm tra nếu nhấn skill3 và mana đầy thì mới cho biến hình
+        if (Input.GetKeyDown(skill3Key) && manaSystem.CurrentMana >= maxMana && transformPrefab != null)
+        {
+            TransformCharacter();
+        }
     }
+
+
+    private void TransformCharacter()
+    {
+        if (manaSystem.CurrentMana < maxMana || isTransformed) return; // Chỉ biến hình khi đủ mana và chưa biến hình
+        if(transformSound != null) transformSound.Play();
+        isTransformed = true; // Đánh dấu đã biến hình
+
+        // Tăng gấp đôi chỉ số
+        maxHealth *= (float)1.5;
+        runSpeed *= 2;
+        jumpForce *= (float) 1.2;
+        attackDamage *= (float)1.2;
+
+        // Cập nhật máu mới (không vượt quá maxHealth)
+        float newHealth = Mathf.Min(healthSystem.GetCurrentHealth() * (float)1.5, maxHealth);
+        healthSystem.SetHealth(newHealth);
+
+        // Đổi hình dạng nhân vật (Sprite, Animator, v.v.)
+        if (transformPrefab != null)
+        {
+            SpriteRenderer newSprite = transformPrefab.GetComponent<SpriteRenderer>();
+            Animator newAnimator = transformPrefab.GetComponent<Animator>();
+
+            if (newSprite != null) GetComponent<SpriteRenderer>().sprite = newSprite.sprite;
+            if (newSprite != null)
+            {
+                GetComponent<SpriteRenderer>().sprite = newSprite.sprite;
+                transform.localScale *= 1.5f; // Phóng to lên 1.5 lần
+            }
+            if (newAnimator != null)
+            {
+                RuntimeAnimatorController newAnimController = newAnimator.runtimeAnimatorController;
+                if (newAnimController != null) animator.runtimeAnimatorController = newAnimController;
+            }
+        }
+
+        // Trừ toàn bộ mana
+        manaSystem.ChangeMana(-maxMana);
+        manaSystem.ChangeMana(0);
+        ManaBar mana = GetComponent<ManaBar>();
+        mana.SetMaxMana(0);
+        // Bắt đầu trừ máu dần theo thời gian
+        StartCoroutine(DecreaseHealthOverTime(30f));
+    }
+
+    private IEnumerator DecreaseHealthOverTime(float amountPerSecond)
+    {
+        while (healthSystem.GetCurrentHealth() > 0)
+        {
+            healthSystem.TakeDamage(amountPerSecond);
+            yield return new WaitForSeconds(1f);
+        }
+
+        // Khi máu về 0, bật trigger "Die"
+        if (animator != null)
+        {
+            animator.SetTrigger("Die");
+        }
+
+        yield return new WaitForSeconds(2f); // Chờ animation chết
+        Destroy(gameObject); // Xóa nhân vật
+    }
+
 
     private void HandleMovement()
     {
@@ -185,32 +268,46 @@ public class CharacterBase : MonoBehaviour
     }
 
     int countAttack;
+    private bool isBoostedDamage = false;
+
     private void HandleAttack()
     {
         if (Input.GetKeyDown(attackKey))
         {
             lastAttackTime = Time.time;
-            attackComboStep++;
             countAttack = Mathf.Clamp(countAttack + 1, 0, 3); // Giới hạn tối đa là 3
 
-            attackDamage = (countAttack >= 3) ? attackDamage * 2 : attackDamage;
-
+            float finalDamage = attackDamage; // Mặc định lấy damage gốc
+            if (countAttack == 3)
+            {
+                finalDamage *= 2; // X2 dame khi combo đạt 3
+            }
             animator.SetFloat("AttackType", attackComboStep);
             animator.SetTrigger("Attack");
 
-            StartCoroutine(ActivateAttackZone());
+            StartCoroutine(ActivateAttackZone(attackDamage));
+            attackComboStep++;
+            if (attackComboStep > 3) attackComboStep = 0;
         }
     }
 
-    private IEnumerator ActivateAttackZone()
+    private IEnumerator ActivateAttackZone(float damage)
     {
-        attackZone.SetActive(true);
+        if(isTransformed)
+        {
+            attackZone.transform.localScale = Vector3.one * 1.5f;
+        }
+        else
+        {
+            attackZone.SetActive(true);
+        }
 
-        DealDamageToEnemies();
+        DealDamageToEnemies(damage);
 
         yield return new WaitForSeconds(attackDuration);
         attackZone.SetActive(false);
     }
+
 
     private void CheckComboReset()
     {
@@ -219,10 +316,17 @@ public class CharacterBase : MonoBehaviour
             countAttack = 0;
             attackComboStep = 0;
             animator.SetFloat("AttackType", 0);
+
+            if (isBoostedDamage)
+            {
+                attackDamage = originalAttackDamage; // Reset lại damage
+                isBoostedDamage = false;
+            }
         }
     }
 
-    private void DealDamageToEnemies()
+
+    private void DealDamageToEnemies(float damage)
     {
         float attackRadius = attackZone.GetComponent<CircleCollider2D>().radius;
         Collider2D[] enemiesHit = Physics2D.OverlapCircleAll(attackZone.transform.position, attackRadius);
@@ -235,15 +339,23 @@ public class CharacterBase : MonoBehaviour
                 HealthSystem enemyHealth = enemy.GetComponent<HealthSystem>();
                 if (enemyHealth != null)
                 {
-                    Debug.Log($"Gây sát thương cho: {enemy.gameObject.name}");
-                    enemyHealth.TakeDamage(attackDamage);
-					if (hitSound != null) hitSound.Play();
-					manaSystem?.ChangeMana(5f);
+                    if (!isTransformed)
+                    {
+                        Debug.Log($"Gây sát thương {damage} cho: {enemy.gameObject.name}");
+                        enemyHealth.TakeDamage(damage);
+                        if (hitSound != null) hitSound.Play();
+                        manaSystem?.ChangeMana(5f);
+                    }
+                    else
+                    {
+                        Debug.Log($"Gây sát thương {damage} cho: {enemy.gameObject.name}");
+                        enemyHealth.TakeDamage(damage);
+                        healthSystem.Heal(20f);
+                    }
                 }
             }
         }
     }
-
 
     protected void HealSkill(float healAmount)
     {
@@ -384,4 +496,9 @@ public class CharacterBase : MonoBehaviour
 	{
 		if (skill2Sound != null) skill2Sound.Play();
 	}
+
+    private void PlaySoundSkill3()
+    {
+        if(transformSound != null) transformSound.Play();
+    }
 }

@@ -876,6 +876,7 @@ MonoBehaviour:
   dashSpeed: 20
   dashTime: 0.1
   dashCooldown: 0.5
+  transformPrefab: {fileID: 5901388171025742857, guid: a76e5ed1b5b1c6d4c85c229472c03fee, type: 3}
   attackZone: {fileID: 5395739579971056072}
   attackDuration: 0.5
   attackDamage: 10
@@ -892,6 +893,7 @@ MonoBehaviour:
   hitSound: {fileID: 4607607390220307308}
   skill1Sound: {fileID: 3417361449286307692}
   skill2Sound: {fileID: 301598382185295315}
+  transformSound: {fileID: 0}
   C1_1Prefab: {fileID: 8977106317212022198, guid: b7d362e8be944ab429d63f48b4ae7f3f, type: 3}
   firePoint1: {fileID: 7769193160117727085}
   meleeSkill1Zone: {fileID: 4040965761809576394}
