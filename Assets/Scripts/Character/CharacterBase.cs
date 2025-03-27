@@ -119,6 +119,12 @@ public class CharacterBase : MonoBehaviour
         HandleAttack();
         CheckComboReset();
 
+        // Nếu đã biến hình thì không cho hồi mana
+        if (!isTransformed)
+        {
+            manaSystem.ChangeMana(manaRegenRate * Time.deltaTime);
+        }
+
         // Nếu đã biến hình thì không cho dùng skill
         if (isTransformed) return;
 
@@ -137,7 +143,6 @@ public class CharacterBase : MonoBehaviour
         isTransformed = true; // Đánh dấu đã biến hình
 
         // Tăng gấp đôi chỉ số
-        maxHealth *= (float)1.5;
         runSpeed *= 2;
         jumpForce *= (float) 1.2;
         attackDamage *= (float)1.2;
@@ -167,11 +172,8 @@ public class CharacterBase : MonoBehaviour
 
         // Trừ toàn bộ mana
         manaSystem.ChangeMana(-maxMana);
-        manaSystem.ChangeMana(0);
-        ManaBar mana = GetComponent<ManaBar>();
-        mana.SetMaxMana(0);
         // Bắt đầu trừ máu dần theo thời gian
-        StartCoroutine(DecreaseHealthOverTime(30f));
+        StartCoroutine(DecreaseHealthOverTime(10f));
     }
 
     private IEnumerator DecreaseHealthOverTime(float amountPerSecond)
