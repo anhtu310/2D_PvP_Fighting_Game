@@ -60,17 +60,16 @@ public class GameManager : MonoBehaviour
         int randomIndex = Random.Range(0, itemsPrefab.Count);
         GameObject randomItem = itemsPrefab[randomIndex];
 
-        InstantiateItems(randomItem, itemsPoint, "Item");
+        InstantiateItems(randomItem, itemsPoint);
     }
 
-    GameObject InstantiateItems(GameObject prefab, Transform spawnPoint, string tag)
+    GameObject InstantiateItems(GameObject prefab, Transform spawnPoint)
     {
         Vector3 campos = Camera.main.transform.position;
         campos.z = 1;
         campos.x += 3;
         spawnPoint.transform.position = campos;
         GameObject item = Instantiate(prefab, spawnPoint.position, Quaternion.identity);
-        item.tag = tag;
         return item;
     }
 

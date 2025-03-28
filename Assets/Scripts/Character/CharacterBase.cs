@@ -12,6 +12,11 @@ public class CharacterBase : MonoBehaviour
     public float dashCooldown = 0.5f;
 
     public GameObject transformPrefab; // Prefab mới khi dùng Skill3
+                                       // Thêm vào trên cùng
+    private Sprite originalSprite;
+    private RuntimeAnimatorController originalAnimatorController;
+    private Vector3 originalScale;
+
 
 
     public GameObject attackZone;
@@ -61,6 +66,11 @@ public class CharacterBase : MonoBehaviour
 	public AudioSource skill1Sound;
 	public AudioSource skill2Sound;
     public AudioSource transformSound;
+
+    public bool getIsTranform()
+    {
+        return isTransformed;
+    }
 
     protected virtual void Start()
     {
@@ -135,34 +145,39 @@ public class CharacterBase : MonoBehaviour
         }
     }
 
-
+    private Coroutine healthDrainCoroutine;
     private void TransformCharacter()
     {
         if (manaSystem.CurrentMana < maxMana || isTransformed) return; // Chỉ biến hình khi đủ mana và chưa biến hình
-        if(transformSound != null) transformSound.Play();
+        if (transformSound != null) transformSound.Play();
         isTransformed = true; // Đánh dấu đã biến hình
 
-        // Tăng gấp đôi chỉ số
-        runSpeed *= 2;
-        jumpForce *= (float) 1.2;
-        attackDamage *= (float)1.2;
+        // --- Lưu thông tin gốc ---
+        originalSprite = GetComponent<SpriteRenderer>().sprite;
+        originalAnimatorController = animator.runtimeAnimatorController;
+        originalScale = transform.localScale;
 
-        // Cập nhật máu mới (không vượt quá maxHealth)
-        float newHealth = Mathf.Min(healthSystem.GetCurrentHealth() * (float)1.5, maxHealth);
+        // Tăng chỉ số
+        runSpeed *= 2;
+        jumpForce *= 1.2f;
+        attackDamage *= 1.2f;
+
+        // Máu mới
+        float newHealth = Mathf.Min(healthSystem.GetCurrentHealth() * 1.5f, maxHealth);
         healthSystem.SetHealth(newHealth);
 
-        // Đổi hình dạng nhân vật (Sprite, Animator, v.v.)
+        // Đổi sprite và animator
         if (transformPrefab != null)
         {
             SpriteRenderer newSprite = transformPrefab.GetComponent<SpriteRenderer>();
             Animator newAnimator = transformPrefab.GetComponent<Animator>();
 
-            if (newSprite != null) GetComponent<SpriteRenderer>().sprite = newSprite.sprite;
             if (newSprite != null)
             {
                 GetComponent<SpriteRenderer>().sprite = newSprite.sprite;
-                transform.localScale *= 1.5f; // Phóng to lên 1.5 lần
+                transform.localScale *= 1.5f;
             }
+
             if (newAnimator != null)
             {
                 RuntimeAnimatorController newAnimController = newAnimator.runtimeAnimatorController;
@@ -170,10 +185,35 @@ public class CharacterBase : MonoBehaviour
             }
         }
 
-        // Trừ toàn bộ mana
+        // Trừ mana
         manaSystem.ChangeMana(-maxMana);
-        // Bắt đầu trừ máu dần theo thời gian
-        StartCoroutine(DecreaseHealthOverTime(10f));
+        // Bắt đầu trừ máu dần
+        healthDrainCoroutine = StartCoroutine(DecreaseHealthOverTime(35f));
+    }
+
+    private void RevertTransformation()
+    {
+        if (!isTransformed) return;
+
+        // Stop trừ máu
+        if (healthDrainCoroutine != null)
+        {
+            StopCoroutine(healthDrainCoroutine);
+            healthDrainCoroutine = null;
+        }
+
+        // Reset chỉ số
+        runSpeed /= 2;
+        jumpForce /= 1.2f;
+        attackDamage /= 1.2f;
+
+        // Reset sprite và animator
+        if (originalSprite != null) GetComponent<SpriteRenderer>().sprite = originalSprite;
+        if (originalAnimatorController != null) animator.runtimeAnimatorController = originalAnimatorController;
+        transform.localScale = originalScale;
+
+        isTransformed = false;
+        Debug.Log($"{gameObject.name} đã trở về trạng thái bình thường và dừng trừ máu.");
     }
 
     private IEnumerator DecreaseHealthOverTime(float amountPerSecond)
@@ -254,8 +294,8 @@ public class CharacterBase : MonoBehaviour
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0;
 
-        //Collider2D col = GetComponent<Collider2D>();
-        //col.enabled = false; // Tắt collider để không va chạm với đối thủ
+        Collider2D col = GetComponent<Collider2D>();
+        col.enabled = false; // Tắt collider để không va chạm với đối thủ
 
         rb.linearVelocity = new Vector2((transform.localScale.x > 0 ? 1 : -1) * dashSpeed, 0);
 		if (dashSound != null) dashSound.Play();
@@ -263,7 +303,7 @@ public class CharacterBase : MonoBehaviour
 
         rb.gravityScale = originalGravity;
         isDashing = false;
-        //col.enabled = true; // Bật lại collider
+        col.enabled = true; // Bật lại collider
 
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
@@ -343,16 +383,19 @@ public class CharacterBase : MonoBehaviour
                 {
                     if (!isTransformed)
                     {
-                        Debug.Log($"Gây sát thương {damage} cho: {enemy.gameObject.name}");
                         enemyHealth.TakeDamage(damage);
-                        if (hitSound != null) hitSound.Play();
                         manaSystem?.ChangeMana(5f);
                     }
                     else
                     {
-                        Debug.Log($"Gây sát thương {damage} cho: {enemy.gameObject.name}");
                         enemyHealth.TakeDamage(damage);
-                        healthSystem.Heal(20f);
+                        healthSystem.Heal(10f);
+                    }
+
+                    // Nếu đối thủ đã chết thì revert
+                    if (enemyHealth.GetCurrentHealth() <= 0 && isTransformed)
+                    {
+                        RevertTransformation();
                     }
                 }
             }
@@ -457,7 +500,7 @@ public class CharacterBase : MonoBehaviour
     {
         Debug.Log($"Va chạm với: {collision.gameObject.name} (Tag: {collision.tag})");
 
-        if (collision.CompareTag("Possion"))
+        if (collision.CompareTag("Poison"))
         {
             healthSystem.TakeDamage(30);
             Destroy(collision.gameObject);
@@ -469,7 +512,7 @@ public class CharacterBase : MonoBehaviour
         }
         else if (collision.CompareTag("Speed"))
         {
-            runSpeed += 3;
+            runSpeed += 2;
             Destroy(collision.gameObject);
         }
     }

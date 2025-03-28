@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 8720473290706053761}
   - component: {fileID: 1448639918311142544}
   m_Layer: 0
-  m_Name: Possion
-  m_TagString: Possion
+  m_Name: Poison
+  m_TagString: Poison
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

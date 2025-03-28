@@ -10,9 +10,9 @@ TagManager:
   - Projectile_P1
   - Projectile_P2
   - Audio
-  - Possion
   - Heal
   - Speed
+  - Poison
   layers:
   - Default
   - TransparentFX

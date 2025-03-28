@@ -37,7 +37,7 @@ public class ManaSystem : MonoBehaviour
 
     IEnumerator RegenerateMana()
     {
-        while (true)
+        while (character.getIsTranform())
         {
             yield return new WaitForSeconds(1f);
             ChangeMana(character.manaRegenRate);
